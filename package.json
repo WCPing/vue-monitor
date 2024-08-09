@@ -1,0 +1,22 @@
+{
+    "type": "module",
+    "name": "vue3-monitor",
+    "version": "1.0.0",
+    "description": "vue3平台项目错误监控演示",
+    "scripts": {
+        "dev": "vite --port 3333 --open",
+        "build": "vite build"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@types/node": "^22.1.0",
+        "vue": "^3.4.35",
+        "vue-router": "^4.4.3"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^5.1.2",
+        "typescript": "^5.5.4",
+        "vite": "^5.3.5"
+    }
+}
