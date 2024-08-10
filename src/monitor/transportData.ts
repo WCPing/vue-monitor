@@ -26,6 +26,9 @@ export class TransportData {
 
     // 通过gif图片上报
     // new Image().src = './img.gif?name=hester&num='+Math.random()
+    // 支持跨域，不阻塞页面加载，体积小,不会挂载到dom上
+    // 如果需要时gif:缺点get请求方式，后台需单独设置/img.gif的接口
+    // 可以不纠结gif，直接用通用的现成的上报url， 前提是get请求方式
     imgRequest(data: any, url: string): void {
         const requestFn = () => {
             let img = new Image()

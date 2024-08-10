@@ -37,7 +37,7 @@ export default function uploadSourcemapPlugin(options: {
     return {
         name: 'vite-plugin-upload-sourcemap',
         apply: 'build',
-        closeBundle: async () => {
+        closeBundle: async () => { // 在打包之后操作
             const sourcemapDir = path.resolve(process.cwd(), 'dist/assets') // 假设 sourcemap 文件在 dist 目录下
             const sourcemapFiles = fs
                 .readdirSync(sourcemapDir)
