@@ -29,8 +29,8 @@ function onClickNativeErrorFetch() {
         body: JSON.stringify({ test: 'test request body' }),
         mode: 'cors',
         headers: {
-            'Content-Type': 'application/json',;
-    },
+            'Content-Type': 'application/json',
+        },
     }).then(
         (res) => {
             res.text().then(res => console.log('res', res))

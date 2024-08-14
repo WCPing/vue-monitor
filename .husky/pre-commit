@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+# lint是在配置eslint时，添加在packages.json中的命令
+# 你也可以替换成你想执行的任何命令
+pnpm run lint-staged

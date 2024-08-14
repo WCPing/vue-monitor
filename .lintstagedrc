@@ -1,0 +1,3 @@
+{
+  "*.(tsx|js|ts|jsx)": "eslint --fix"
+}
