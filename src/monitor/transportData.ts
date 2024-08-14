@@ -18,7 +18,7 @@ export class TransportData {
     // post请求，异步发送，不阻塞页面
     sendBeaconRequest(data: any, url: string): void {
         const requestFn = () => {
-            const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+            const blob = new Blob([JSON.stringify(data)], { type: 'application/json' })
             navigator.sendBeacon(url, blob)
         }
         this.queuePool.addFn(requestFn)
@@ -32,9 +32,9 @@ export class TransportData {
     imgRequest(data: any, url: string): void {
         const requestFn = () => {
             let img = new Image()
-            const spliceStr = url.indexOf('?') === -1 ? '?' : '&'
+            const spliceStr = !url.includes('?') ? '?' : '&'
             img.src = `${url}${spliceStr}data=${encodeURIComponent(
-                JSON.stringify(data)
+                JSON.stringify(data),
             )}`
             img = null as any
         }
@@ -48,7 +48,7 @@ export class TransportData {
             xhr.open('POST', url)
             xhr.setRequestHeader(
                 'Content-Type',
-                'application/json;charset=UTF-8'
+                'application/json;charset=UTF-8',
             )
             xhr.withCredentials = true
             xhr.send(JSON.stringify(data))
@@ -74,7 +74,7 @@ export class TransportData {
         const STORAGE_KEY = 'PC_MONITOR_STORAGE'
         const STORAGE_MAX_NUM = 50
         const requestFn = () => {
-            let storageData = window.localStorage.getItem(STORAGE_KEY)
+            const storageData = window.localStorage.getItem(STORAGE_KEY)
             if (storageData) {
                 let storageArr = JSON.parse(storageData)
                 storageArr.unshift(data) // 头部追加
@@ -83,7 +83,7 @@ export class TransportData {
                 }
                 window.localStorage.setItem(
                     STORAGE_KEY,
-                    JSON.stringify(storageArr)
+                    JSON.stringify(storageArr),
                 )
                 return
             }
@@ -101,10 +101,11 @@ export class TransportData {
         const reportWindowErrApi = 'reportError'
         if (data.type === 'Vue') {
             this.sendBeaconRequest(data, `${errorMonitorUrl}${reportVueErrApi}`)
-        } else {
+        }
+        else {
             this.sendBeaconRequest(
                 data,
-                `${errorMonitorUrl}${reportWindowErrApi}`
+                `${errorMonitorUrl}${reportWindowErrApi}`,
             )
         }
     }

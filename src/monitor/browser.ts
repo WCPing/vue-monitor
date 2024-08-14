@@ -1,3 +1,4 @@
+/* eslint-disable regexp/no-super-linear-backtracking */
 import { ErrorTypes } from './constant'
 import { getLocationHref, getTimestamp } from './util'
 
@@ -14,9 +15,8 @@ export function htmlElementAsString(target: HTMLElement): string {
     classNames = classNames !== '' ? ` class="${classNames}"` : ''
     const id = target.id ? ` id="${target.id}"` : ''
     const innerText = target.innerText
-    return `<${tagName}${id}${
-        classNames !== '' ? classNames : ''
-    }>${innerText}</${tagName}>`
+    return `<${tagName}${id}${classNames !== '' ? classNames : ''
+        }>${innerText}</${tagName}>`
 }
 
 /**
@@ -34,7 +34,7 @@ export function parseUrlToObj(url: string): {
     }
 
     const match = url.match(
-        /^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?$/
+        /^(([^:/?#]+):)?(\/\/([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?$/,
     )
 
     if (!match) {
@@ -58,8 +58,8 @@ export function parseUrlToObj(url: string): {
  */
 export function extractErrorStack(
     ex: any,
-    level: any
-): { stack: any[]; normal: any } {
+    level: any,
+): { stack: any[], normal: any } {
     const normal = {
         time: getTimestamp(),
         url: getLocationHref(),
@@ -71,17 +71,17 @@ export function extractErrorStack(
         return normal
     }
 
-    const chrome =
-            /^\s*at (.*?) ?\(((?:file|https?|blob|chrome-extension|native|eval|webpack|<anonymous>|[a-z]:|\/).*?)(?::(\d+))?(?::(\d+))?\)?\s*$/i,
-        gecko =
-            /^\s*(.*?)(?:\((.*?)\))?(?:^|@)((?:file|https?|blob|chrome|webpack|resource|\[native).*?|[^@]*bundle)(?::(\d+))?(?::(\d+))?\s*$/i,
-        winjs =
-            /^\s*at (?:((?:\[object object\])?.+) )?\(?((?:file|ms-appx|https?|webpack|blob):.*?):(\d+)(?::(\d+))?\)?\s*$/i,
-        // Used to additionally parse URL/line/column from eval frames
-        geckoEval = /(\S+) line (\d+)(?: > eval line \d+)* > eval/i,
-        chromeEval = /\((\S*)(?::(\d+))(?::(\d+))\)/,
-        lines = ex.stack.split('\n'),
-        stack = []
+    const chrome
+        = /^\s*at (.*?) ?\(((?:file|https?|blob|chrome-extension|native|eval|webpack|<anonymous>|[a-z]:|\/).*?)(?::(\d+))?(?::(\d+))?\)?\s*$/i
+    const gecko
+        = /^\s*(.*?)(?:\((.*?)\))?(?:^|@)((?:file|https?|blob|chrome|webpack|resource|\[native).*?|[^@]*bundle)(?::(\d+))?(?::(\d+))?\s*$/i
+    const winjs
+        = /^\s*at (?:(.+) )?\(?((?:file|ms-appx|https?|webpack|blob):.*?):(\d+)(?::(\d+))?\)?\s*$/i
+    // Used to additionally parse URL/line/column from eval frames
+    const geckoEval = /(\S+) line (\d+)(?: > eval line \d+)* > eval/i
+    const chromeEval = /\((\S*):(\d+):(\d+)\)/
+    const lines = ex.stack.split('\n')
+    const stack = []
 
     let submatch, parts, element
     // reference = /^(.*) is undefined$/.exec(ex.message)
@@ -103,7 +103,8 @@ export function extractErrorStack(
                 line: parts[3] ? +parts[3] : null,
                 column: parts[4] ? +parts[4] : null,
             }
-        } else if ((parts = winjs.exec(lines[i]))) {
+        }
+        else if ((parts = winjs.exec(lines[i]))) {
             element = {
                 url: parts[2],
                 func: parts[1] || ErrorTypes.UNKNOWN_FUNCTION,
@@ -111,16 +112,18 @@ export function extractErrorStack(
                 line: +parts[3],
                 column: parts[4] ? +parts[4] : null,
             }
-        } else if ((parts = gecko.exec(lines[i]))) {
-            const isEval = parts[3] && parts[3].indexOf(' > eval') > -1
+        }
+        else if ((parts = gecko.exec(lines[i]))) {
+            const isEval = parts[3] && parts[3].includes(' > eval')
             if (isEval && (submatch = geckoEval.exec(parts[3]))) {
                 parts[3] = submatch[1]
                 parts[4] = submatch[2]
                 parts[5] = '' // no column when eval
-            } else if (
-                i === 0 &&
-                !parts[5] &&
-                typeof ex.columnNumber !== 'undefined'
+            }
+            else if (
+                i === 0
+                && !parts[5]
+                && typeof ex.columnNumber !== 'undefined'
             ) {
                 // FireFox uses this awesome columnNumber property for its top frame
                 // Also note, Firefox's column number is 0-based and everything else expects 1-based,
@@ -135,7 +138,8 @@ export function extractErrorStack(
                 line: parts[4] ? +parts[4] : null,
                 column: parts[5] ? +parts[5] : null,
             }
-        } else {
+        }
+        else {
             continue
         }
 
@@ -151,6 +155,6 @@ export function extractErrorStack(
     }
     return {
         ...normal,
-        stack: stack,
+        stack,
     }
 }

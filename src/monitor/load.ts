@@ -1,4 +1,4 @@
-import { EventTypes, BreadCrumbTypes } from './constant'
+import { BreadCrumbTypes, EventTypes } from './constant'
 import { addListenHandler } from './listen'
 import { HandleEvents } from './handleEvents'
 

@@ -10,14 +10,14 @@ export function initMonitor() {
     setupListen()
 }
 
- const appMonitor = {
+const appMonitor = {
     install(app: App) {
         setupListen()
         // 监控vue错误. fetch/promise异常， vue无法监控，vue只能监控代码异常
         app.config.errorHandler = (err, vm, info) => {
-            handleVueError.apply(null, [err as any, vm as any, info, 'normal', 'error', app as any]);
+            handleVueError(err as any, vm as any, info, 'normal', 'error', app as any)
         }
-    }
+    },
 }
 
 export default appMonitor

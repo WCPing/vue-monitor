@@ -1,35 +1,36 @@
-import { subscribeEvent, triggerHandlers, ListenHandler } from './subscribe'
+import type { ListenHandler } from './subscribe'
+import { subscribeEvent, triggerHandlers } from './subscribe'
 import { EventTypes } from './constant'
 
 function replace(type: EventTypes) {
     switch (type) {
         case EventTypes.XHR:
-          xhrReplace();
-          break;
+            xhrReplace()
+            break
         case EventTypes.FETCH:
-          fetchReplace();
-          break;
+            fetchReplace()
+            break
         case EventTypes.ERROR:
-          listenError();
-          break;
+            listenError()
+            break
         case EventTypes.CONSOLE:
-          consoleReplace();
-          break;
+            consoleReplace()
+            break
         case EventTypes.HISTORY:
-          historyReplace();
-          break;
+            historyReplace()
+            break
         case EventTypes.UNHANDLEDREJECTION:
-          unhandledrejectionReplace();
-          break;
+            unhandledrejectionReplace()
+            break
         case EventTypes.DOM:
-          domReplace();
-          break;
+            domReplace()
+            break
         case EventTypes.HASHCHANGE:
-          listenHashchange();
-          break;
+            listenHashchange()
+            break
         default:
-          break;
-      }
+            break
+    }
 }
 
 function xhrReplace(): void {}
@@ -58,6 +59,7 @@ function domReplace(): void {}
 function listenHashchange(): void {}
 
 export function addListenHandler(handler: ListenHandler) {
-    if (!subscribeEvent(handler)) return
+    if (!subscribeEvent(handler))
+        return
     replace(handler.type as EventTypes)
 }

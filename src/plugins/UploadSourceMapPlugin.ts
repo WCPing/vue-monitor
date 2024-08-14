@@ -1,26 +1,26 @@
-import fs from 'fs'
-import path from 'path'
-import http from 'http'
+import fs from 'node:fs'
+import path from 'node:path'
+import http from 'node:http'
 import type { PluginOption } from 'vite'
 
-const uploadFile = (url: string, filePath: string, file: any) => {
-    return new Promise((resolve, reject) => {
+function uploadFile(url: string, filePath: string, file: any) {
+    return new Promise((resolve) => {
         const req = http.request(`${url}/upload?name=${path.basename(file)}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/octet-stream',
-                Connection: 'keep-alive',
+                'Connection': 'keep-alive',
                 'Transfer-Encoding': 'chunked',
             },
         })
         fs.createReadStream(filePath)
-            .on('data', (chunk) => {
+            .on('data', (chunk: any) => {
                 req.write(chunk)
             })
             .on('end', () => {
                 req.end()
                 // 删除文件
-                fs.unlink(filePath, (err) => {
+                fs.unlink(filePath, (err: any) => {
                     if (err) {
                         console.error(err)
                     }
@@ -37,11 +37,13 @@ export default function uploadSourcemapPlugin(options: {
     return {
         name: 'vite-plugin-upload-sourcemap',
         apply: 'build',
-        closeBundle: async () => { // 在打包之后操作
+        closeBundle: async () => {
+            // 在打包之后操作
+            // eslint-disable-next-line node/prefer-global/process
             const sourcemapDir = path.resolve(process.cwd(), 'dist/assets') // 假设 sourcemap 文件在 dist 目录下
             const sourcemapFiles = fs
                 .readdirSync(sourcemapDir)
-                .filter((file) => file.endsWith('.map'))
+                .filter((file: string) => file.endsWith('.map'))
 
             for (const file of sourcemapFiles) {
                 const fileName = path.basename(file)

@@ -1,4 +1,4 @@
-import { voidFun } from './constant'
+import type { voidFun } from './constant'
 
 export class QueuePool {
     private micro: Promise<void>
@@ -10,7 +10,8 @@ export class QueuePool {
     }
 
     addFn(fn: voidFun): void {
-        if (typeof fn !== 'function') return
+        if (typeof fn !== 'function')
+            return
         this.stack.push(fn)
         if (!this.isFlushing) {
             this.isFlushing = true

@@ -4,17 +4,13 @@
  * promise异常
  */
 
-import {
-    BreadCrumbTypes,
-    ERROR_TYPE_RE,
-    ErrorTypes,
-    HttpCodes,
-} from './constant'
+import type { BreadCrumbTypes } from './constant'
+import { ERROR_TYPE_RE, ErrorTypes, HttpCodes } from './constant'
 import { transportData } from './transportData'
 import {
     getLocationHref,
-    interceptStr,
     getTimestamp,
+    interceptStr,
     isError,
     unknownToString,
 } from './util'
@@ -30,11 +26,9 @@ export function httpTransform(data: any) {
     const { elapsedTime, time, method, traceId, type, status } = data
     const name = `${type}--${method}`
     if (status === 0) {
-        message =
-            elapsedTime <= 1000
-                ? 'http请求失败，失败原因：跨域限制或域名不存在'
-                : 'http请求失败，失败原因：超时'
-    } else {
+        message = elapsedTime <= 1000 ? 'http请求失败，失败原因：跨域限制或域名不存在' : 'http请求失败，失败原因：超时'
+    }
+    else {
         // message = fromHttpStatus(status);
         message = status
     }
@@ -64,9 +58,8 @@ export function resourceTransform(target: any) {
     return {
         type: ErrorTypes.RESOURCE_ERROR,
         url: getLocationHref(),
-        message:
-            '资源地址: ' +
-            (interceptStr(target.src, 120) || interceptStr(target.href, 120)),
+        message: `资源地址: ${interceptStr(target.src, 120) || interceptStr(target.href, 120)
+            }`,
         level: 'low',
         time: getTimestamp(),
         name: `${resourceMap[target.localName] || target.localName}加载失败`,
@@ -75,10 +68,7 @@ export function resourceTransform(target: any) {
 
 const HandleEvents = {
     handleHttp(data: any, type: BreadCrumbTypes) {
-        const isError =
-            data.status === 0 ||
-            data.status === HttpCodes.BAD_REQUEST ||
-            data.status > HttpCodes.UNAUTHORIZED
+        const isError = data.status === 0 || data.status === HttpCodes.BAD_REQUEST || data.status > HttpCodes.UNAUTHORIZED
         const result = httpTransform(data)
         const sendData = {
             type,
@@ -110,13 +100,14 @@ const HandleEvents = {
             result = extractErrorStack(error, 'normal')
         }
         // 处理SyntaxError，stack没有lineno、colno
-        result ||
-            (result = HandleEvents.handleNotErrorInstance(
+        if (!result) {
+            result = HandleEvents.handleNotErrorInstance(
                 message,
                 filename,
                 lineno,
-                colno
-            ))
+                colno,
+            )
+        }
         result.type = ErrorTypes.JAVASCRIPT_ERROR
         const sendData = {
             type: 'Code Error',
@@ -131,7 +122,7 @@ const HandleEvents = {
         message: string,
         filename: string,
         lineno: number,
-        colno: number
+        colno: number,
     ) {
         let name: string | ErrorTypes = ErrorTypes.UNKNOWN
         const url = filename || getLocationHref()

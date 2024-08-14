@@ -1,5 +1,5 @@
-import Example from '@/pages/example.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import Example from '@/pages/example.vue'
 
 const routes = [
     {

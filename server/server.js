@@ -1,8 +1,8 @@
+const path = require('node:path')
+const fs = require('node:fs')
 const express = require('express')
 const SourceMap = require('source-map')
 const cors = require('cors')
-const path = require('path')
-const fs = require('fs')
 const LogErr = require('./logError')
 
 const PORT = '3334'
@@ -28,7 +28,7 @@ app.post('/reportVueError', async (req, res) => {
     // 获取文件名
     const fileName = path.basename(stack.url)
     // 查询map文件
-    const filePath = path.join(__dirname, 'uploads', fileName + '.map')
+    const filePath = path.join(__dirname, 'uploads', `${fileName}.map`)
 
     const readFile = function (filePath) {
         return new Promise((resolve, reject) => {
@@ -59,7 +59,8 @@ app.post('/reportVueError', async (req, res) => {
             line: stack.line,
             column: stack.column,
         })
-    } catch (err) {
+    }
+    catch (err) {
         sourceMapParseResult = err
     }
 

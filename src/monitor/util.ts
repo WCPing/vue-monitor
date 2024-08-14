@@ -8,15 +8,16 @@ export function getTimestamp(): string {
 }
 
 export function getLocationHref(): string {
-    if (typeof document === 'undefined' || document.location == null) return ''
+    if (typeof document === 'undefined' || document.location == null)
+        return ''
     return document.location.href
 }
 
 export function interceptStr(str: unknown, interceptLength: number) {
     if (typeof str === 'string') {
         return (
-            str.slice(0, interceptLength) +
-            (str.length > interceptLength
+            str.slice(0, interceptLength)
+            + (str.length > interceptLength
                 ? `:截取前${interceptLength}个字符`
                 : '')
         )
@@ -27,7 +28,7 @@ export function unknownToString(target: unknown) {
     if (typeof target === 'string') {
         return target
     }
-    if (typeof target === undefined) {
+    if (typeof target === 'undefined') {
         return 'undefined'
     }
     return JSON.stringify(target)
@@ -49,7 +50,9 @@ export function isError(wat: any) {
 export function isInstanceOf(wat: any, base: any) {
     try {
         return wat instanceof base
-    } catch (_e) {
+    }
+    catch (e: any) {
+        console.log(e)
         return false
     }
 }

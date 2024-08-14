@@ -1,6 +1,6 @@
-import { getLocationHref, getTimestamp, getBigVersion } from './util'
+import { getBigVersion, getLocationHref, getTimestamp } from './util'
 import { transportData } from './transportData'
-import { ViewModel, VueInstance } from './constant'
+import type { ViewModel, VueInstance } from './constant'
 import { extractErrorStack } from './browser'
 
 export function handleVueError(
@@ -9,7 +9,7 @@ export function handleVueError(
     info: string,
     level: string,
     breadcrumbLevel: string,
-    Vue: VueInstance
+    Vue: VueInstance,
 ): void {
     const version = Vue?.version
     const { stack } = extractErrorStack(err, 'error')
@@ -29,7 +29,7 @@ export function handleVueError(
         time: getTimestamp(),
         browserInfo: {
             userAgent: navigator.userAgent,
-            protcol: protcol,
+            protcol,
         },
     }
     switch (getBigVersion(version)) {
@@ -55,15 +55,16 @@ function vue2VmHandler(vm: ViewModel) {
     let componentName = ''
     if (vm.$root === vm) {
         componentName = 'root'
-    } else {
+    }
+    else {
         const name = vm._isVue
-            ? (vm.$options && vm.$options.name) ||
-              (vm.$options && vm.$options._componentTag)
+            ? (vm.$options && vm.$options.name)
+            || (vm.$options && vm.$options._componentTag)
             : vm.name
-        componentName =
-            (name ? 'component <' + name + '>' : 'anonymous component') +
-            (vm._isVue && vm.$options && vm.$options.__file
-                ? ' at ' + (vm.$options && vm.$options.__file)
+        componentName
+            = (name ? `component <${name}>` : 'anonymous component')
+            + (vm._isVue && vm.$options && vm.$options.__file
+                ? ` at ${vm.$options && vm.$options.__file}`
                 : '')
     }
     return {
@@ -75,11 +76,12 @@ function vue3VmHandler(vm: ViewModel) {
     let componentName = ''
     if (vm.$root === vm) {
         componentName = 'root'
-    } else {
+    }
+    else {
         console.log(vm.$options)
         const name = vm.$options && vm.$options.name
         componentName = name
-            ? 'component <' + name + '>'
+            ? `component <${name}>`
             : 'anonymous component'
     }
     return {
