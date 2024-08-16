@@ -56,7 +56,7 @@ function onClickXhrError() {
 
 <template>
     <div class="example-wrapper">
-        <h1>JS 监控测试</h1>
+        <h1>JS 监控测试 + SDK</h1>
         <button id="codeErr" @click="codeError()">
             代码错误
         </button>
