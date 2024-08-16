@@ -5,9 +5,13 @@
     "description": "vue3平台项目错误监控演示",
     "author": "",
     "license": "ISC",
+    "keywords": [
+        "monitor"
+    ],
     "scripts": {
         "dev": "vite --port 3333 --open",
         "build": "vite build",
+        "build:pkg": "pnpm -r --filter=./packages/* run build",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix",
         "up": "taze major -I",
@@ -18,6 +22,7 @@
         "@types/node": "^22.1.0",
         "vue": "^3.4.35",
         "vue-router": "^4.4.3"
+
     },
     "devDependencies": {
         "@antfu/eslint-config": "^2.25.1",

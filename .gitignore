@@ -23,3 +23,8 @@ log
 *.njsproj
 *.sln
 *.sw?
+
+packages/*/dist
+packages/*/node_modules
+
+uploads

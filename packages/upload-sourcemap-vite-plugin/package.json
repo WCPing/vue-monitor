@@ -1,0 +1,23 @@
+{
+    "name": "vite-plugin-upload-sourcemap",
+    "type": "module",
+    "version": "0.0.3",
+    "description": "适用于生产环境自动上传sourcemap文件的vite插件",
+    "author": "",
+    "license": "ISC",
+    "keywords": [],
+    "main": "dist/index.cjs",
+    "module": "./dist/index.mjs",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "unbuild --minify"
+    },
+    "dependencies": {
+        "@types/node": "^22.1.0"
+    },
+    "devDependencies": {
+        "typescript": "^5.5.4",
+        "unbuild": "^2.0.0",
+        "vite": "^5.3.5"
+    }
+}

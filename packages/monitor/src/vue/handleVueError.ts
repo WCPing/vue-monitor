@@ -1,7 +1,7 @@
-import { getBigVersion, getLocationHref, getTimestamp } from './util'
-import { transportData } from './transportData'
-import type { ViewModel, VueInstance } from './constant'
-import { extractErrorStack } from './browser'
+import { getBigVersion, getLocationHref, getTimestamp } from '../core/util'
+import { transportData } from '../core/transportData'
+import type { ViewModel, VueInstance } from '../core/constant'
+import { extractErrorStack } from '../core/browser'
 
 export function handleVueError(
     err: Error,

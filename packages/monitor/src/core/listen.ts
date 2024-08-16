@@ -33,9 +33,9 @@ function replace(type: EventTypes) {
     }
 }
 
-function xhrReplace(): void {}
+function xhrReplace(): void { }
 
-function fetchReplace(): void {}
+function fetchReplace(): void { }
 
 function listenError(): void {
     window.addEventListener('error', (ev: ErrorEvent) => {
@@ -43,9 +43,9 @@ function listenError(): void {
     })
 }
 
-function consoleReplace(): void {}
+function consoleReplace(): void { }
 
-function historyReplace(): void {}
+function historyReplace(): void { }
 
 function unhandledrejectionReplace(): void {
     window.addEventListener('unhandledrejection', (ev: PromiseRejectionEvent) => {
@@ -54,9 +54,9 @@ function unhandledrejectionReplace(): void {
     })
 }
 
-function domReplace(): void {}
+function domReplace(): void { }
 
-function listenHashchange(): void {}
+function listenHashchange(): void { }
 
 export function addListenHandler(handler: ListenHandler) {
     if (!subscribeEvent(handler))
