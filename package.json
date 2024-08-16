@@ -1,37 +1,38 @@
 {
-    "name": "vue3-monitor",
-    "type": "module",
-    "version": "1.0.0",
-    "description": "vue3平台项目错误监控演示",
-    "author": "",
-    "license": "ISC",
-    "keywords": [
-        "monitor"
-    ],
-    "scripts": {
-        "dev": "vite",
-        "build": "vite build",
-        "build:pkg": "pnpm -r --filter=./packages/* run build",
-        "lint": "eslint .",
-        "lint:fix": "eslint . --fix",
-        "up": "taze major -I",
-        "prepare": "husky",
-        "lint-staged": "lint-staged"
-    },
-    "dependencies": {
-        "@types/node": "^22.1.0",
-        "vue": "^3.4.35",
-        "vue-router": "^4.4.3"
-
-    },
-    "devDependencies": {
-        "@antfu/eslint-config": "^2.25.1",
-        "@vitejs/plugin-vue": "^5.1.2",
-        "eslint": "~9.9.0",
-        "husky": "^9.1.4",
-        "lint-staged": "^15.2.9",
-        "taze": "^0.16.5",
-        "typescript": "^5.5.4",
-        "vite": "^5.3.5"
-    }
+  "name": "vue3-monitor",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "vue3平台项目错误监控演示",
+  "author": "",
+  "license": "ISC",
+  "keywords": [
+    "monitor"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:pkg": "pnpm -r --filter=./packages/* run build",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "up": "taze major -I",
+    "prepare": "husky",
+    "lint-staged": "lint-staged"
+  },
+  "dependencies": {
+    "@types/node": "^22.1.0",
+    "vue": "^3.4.35",
+    "vue-router": "^4.4.3"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.25.1",
+    "@commitlint/cli": "^19.4.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@vitejs/plugin-vue": "^5.1.2",
+    "eslint": "~9.9.0",
+    "husky": "^9.1.4",
+    "lint-staged": "^15.2.9",
+    "taze": "^0.16.5",
+    "typescript": "^5.5.4",
+    "vite": "^5.3.5"
+  }
 }
