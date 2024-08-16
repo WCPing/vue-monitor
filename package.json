@@ -9,7 +9,7 @@
         "monitor"
     ],
     "scripts": {
-        "dev": "vite --port 3333 --open",
+        "dev": "vite",
         "build": "vite build",
         "build:pkg": "pnpm -r --filter=./packages/* run build",
         "lint": "eslint .",

@@ -67,12 +67,12 @@ export function resourceTransform(target: any) {
 }
 
 const HandleEvents = {
-    handleHttp(data: any, type: BreadCrumbTypes) {
+    handleHttp(data: any, type: BreadCrumbTypes): void {
         const isError = data.status === 0 || data.status === HttpCodes.BAD_REQUEST || data.status > HttpCodes.UNAUTHORIZED
         const result = httpTransform(data)
         const sendData = {
             type,
-            category: type,
+            category: 'http',
             data: { ...result },
             level: isError ? 'error' : 'info',
             time: data.time,
@@ -115,7 +115,7 @@ const HandleEvents = {
             data: { ...result },
             level: 'error',
         }
-        transportData.send(sendData)
+        return transportData.send(sendData)
     },
 
     handleNotErrorInstance(

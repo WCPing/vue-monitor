@@ -20,4 +20,11 @@ export default defineConfig({
     build: {
         sourcemap: true,
     },
+    server: {
+        port: 3333,
+        open: true, // 自动打开默认浏览器并
+        hmr: { // 错误全屏警告，可以关闭
+            overlay: true,
+        },
+    },
 })

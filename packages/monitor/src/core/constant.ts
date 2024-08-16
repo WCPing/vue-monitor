@@ -138,8 +138,15 @@ export enum HttpCodes {
     INTERNAL_EXCEPTION = 500,
 }
 
+export enum HttpMethods {
+    Get = 'GET',
+    Post = 'POST',
+    Put = 'PUT',
+    Delete = 'DELETE',
+}
+
 export const ERROR_TYPE_RE
-  = /^(?:[Uu]ncaught (?:exception: )?)?(?:((?:Eval|Internal|Range|Reference|Syntax|Type|URI)?Error): )?(.*)$/
+    = /^(?:[Uu]ncaught (?:exception: )?)?(?:((?:Eval|Internal|Range|Reference|Syntax|Type|URI)?Error): )?(.*)$/
 
 const globalVar = {
     isLogAddBreadcrumb: true,

@@ -13,8 +13,8 @@
             "@/*": [
                 "src/*"
             ],
-            "@package/*": [
-                "package/*"
+            "@ping/monitor-*": [
+                "packages/*/src/"
             ]
         },
         "resolveJsonModule": true,
