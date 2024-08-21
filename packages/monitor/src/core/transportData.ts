@@ -100,13 +100,26 @@ export class TransportData {
         const reportVueErrApi = 'reportVueError'
         const reportWindowErrApi = 'reportError'
         if (data.type === 'Vue') {
-            this.sendBeaconRequest(data, `${errorMonitorUrl}${reportVueErrApi}`)
+            this.report(() => {
+                this.sendBeaconRequest(data, `${errorMonitorUrl}${reportVueErrApi}`)
+            })
         }
         else {
-            this.sendBeaconRequest(
-                data,
-                `${errorMonitorUrl}${reportWindowErrApi}`,
-            )
+            this.report(() => {
+                this.sendBeaconRequest(
+                    data,
+                    `${errorMonitorUrl}${reportWindowErrApi}`,
+                )
+            })
+        }
+    }
+
+    report(callback: any) {
+        if (window.requestIdleCallback) {
+            window.requestIdleCallback(callback, { timeout: 3000 })
+        }
+        else {
+            callback()
         }
     }
 }
