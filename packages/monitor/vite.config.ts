@@ -7,4 +7,9 @@ export default defineConfig({
             '@': path.resolve(__dirname, './src'),
         },
     },
+    test: {
+        coverage: {
+            provider: 'v8', // or 'v8'
+        },
+    },
 })
