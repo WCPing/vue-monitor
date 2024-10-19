@@ -7,6 +7,11 @@ const routes = [
         name: 'example',
         component: Example,
     },
+    {
+        path: '/home',
+        name: 'home',
+        component: () => import('@/pages/WhiteScreentTest/Home.vue'),
+    },
 ]
 
 const router = createRouter({
