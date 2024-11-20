@@ -1,0 +1,19 @@
+{
+    "name": "web-performance",
+    "version": "0.0.1",
+    "description": "web performance monitor",
+    "author": "",
+    "license": "ISC",
+    "main": "dist/index.cjs",
+    "module": "./dist/index.mjs",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "unbuild --minify"
+    },
+    "dependencies": {
+        "path-to-regexp": "^8.2.0"
+    },
+    "devDependencies": {
+        "unbuild": "2.0.0"
+    }
+}
